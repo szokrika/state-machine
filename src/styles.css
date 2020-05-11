@@ -1,0 +1,34 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.machine {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 15px;
+  margin: auto;
+  max-width: 300px;
+}
+.machine label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-items: flex-start;
+  max-width: 200px;
+}
+
+.validate {
+  border-top: 1px solid palegoldenrod;
+  margin-top: 30px;
+  padding: 30px;
+}
+.validate.valid {
+  color: white;
+  background: palegreen;
+}
+
+.validate.invalid {
+  color: white;
+  background: palevioletred;
+}
