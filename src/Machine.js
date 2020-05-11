@@ -88,8 +88,7 @@ export default class LightBulb extends React.Component {
   };
 
   service = interpret(alertMachine).onTransition(current => {
-    this.setState({ current });
-    this.validate(current.value);
+    this.setState({ current }, () => this.submit());
   });
 
   componentDidMount() {
@@ -105,24 +104,32 @@ export default class LightBulb extends React.Component {
       values.escalate !== "none" &&
       (values.email !== "none" || values.sms !== "none")
     ) {
-      this.submit(values);
       this.setState({ valid: true });
+      return true;
     } else if (
       values.escalate === "none" &&
       (values.email !== "none" || values.sms !== "none")
     ) {
-      this.submit(values);
       this.setState({ valid: false });
+      return true;
     } else {
       this.setState({ valid: false });
+      return false;
     }
   };
-  submit = values => {
-    console.log({
-      escalate: valuesMap.escalate[values.escalate],
-      email: valuesMap.email[values.email],
-      sms: valuesMap.sms[values.sms]
-    });
+
+  submit = () => {
+    // console.log(this.state.current.value);
+    const values = this.state.current.value;
+    if (this.validate(values)) {
+      console.log({
+        escalate: valuesMap.escalate[values.escalate],
+        email: valuesMap.email[values.email],
+        sms: valuesMap.sms[values.sms]
+      });
+    } else {
+      console.log("invalid");
+    }
   };
 
   render() {
